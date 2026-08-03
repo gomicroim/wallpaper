@@ -39,9 +39,8 @@ export default function App() {
   const scale = useStageScale()
   const clock = useClock()
 
-  // role: district = 区级; community = 社区级（锁定本机构）
   const [role, setRole] = useState('district')
-  const [view, setView] = useState('district') // district | community
+  const [view, setView] = useState('district')
   const [communityId, setCommunityId] = useState(COMMUNITIES[0].id)
   const [period, setPeriod] = useState('q2')
   const [age, setAge] = useState('all')
@@ -85,18 +84,19 @@ export default function App() {
   return (
     <div className="app-shell">
       <div className="stage" style={{ transform: `scale(${scale})` }}>
-        <header className="header" style={{ position: 'absolute', inset: '16px 24px auto', height: 72, zIndex: 10, display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}>
+        <div className="stage-decor" aria-hidden="true">
+          <span className="corner tl" />
+          <span className="corner tr" />
+          <span className="corner bl" />
+          <span className="corner br" />
+        </div>
+        <div className="header-banner" aria-hidden="true" />
+
+        <header className="header header-classic">
           <div className="header-left">
             {view === 'community' && role === 'district' ? (
               <button className="back-btn" onClick={backToDistrict}>← 返回区级总览</button>
             ) : null}
-            <div className="brand-block">
-              <div className="brand-eyebrow">杨浦区 · 家庭医生签约服务</div>
-              <h1 className="brand-title">「三高一重」社区运动干预数据大屏</h1>
-            </div>
-          </div>
-
-          <div className="header-center">
             <div className="level-switch" title="演示分级权限切换">
               <button
                 className={role === 'district' ? 'active' : ''}
@@ -111,6 +111,11 @@ export default function App() {
                 社区级视图
               </button>
             </div>
+          </div>
+
+          <div className="header-center title-center">
+            <div className="brand-eyebrow">杨浦区 · 家庭医生签约服务</div>
+            <h1 className="brand-title">「三高一重」社区运动干预数据大屏</h1>
             <div className="clock">{clock}</div>
           </div>
 
@@ -152,7 +157,7 @@ export default function App() {
           </div>
         </header>
 
-        <div style={{ position: 'absolute', inset: '96px 0 0', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: '108px 0 0', overflow: 'hidden', zIndex: 2 }}>
           {view === 'district' ? (
             <DistrictScreen
               onEnterCommunity={enterCommunity}

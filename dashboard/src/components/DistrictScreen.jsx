@@ -11,9 +11,9 @@ import {
 } from '../data/mockData'
 
 const axisStyle = {
-  axisLine: { lineStyle: { color: 'rgba(126,231,234,0.25)' } },
-  axisLabel: { color: '#8eacb4', fontSize: 11 },
-  splitLine: { lineStyle: { color: 'rgba(126,231,234,0.08)' } },
+  axisLine: { lineStyle: { color: 'rgba(138,216,255,0.25)' } },
+  axisLabel: { color: '#8eb0d0', fontSize: 11 },
+  splitLine: { lineStyle: { color: 'rgba(138,216,255,0.08)' } },
 }
 
 export default function DistrictScreen({ onEnterCommunity, filters }) {
@@ -66,8 +66,8 @@ export default function DistrictScreen({ onEnterCommunity, filters }) {
               type: 'linear',
               x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: '#7ee7ea' },
-                { offset: 1, color: '#2bb673' },
+                { offset: 0, color: '#8ad8ff' },
+                { offset: 1, color: '#2f7dff' },
               ],
             },
           },
@@ -220,10 +220,16 @@ export default function DistrictScreen({ onEnterCommunity, filters }) {
     <div className="screen">
       <div className="kpi-row">
         <KpiCard
+          label="签约总人数"
+          value={s.signed.toLocaleString()}
+          unit="人"
+          sub="家庭医生签约居民合计"
+        />
+        <KpiCard
           label="重点服务对象标签人数"
           value={s.tagged.toLocaleString()}
           unit="人"
-          sub={`签约居民 <strong>${s.signed.toLocaleString()}</strong> 人`}
+          sub="三高一重重点服务对象"
         />
         <KpiCard
           label="标签人数占签约居民比例"
@@ -405,25 +411,6 @@ export default function DistrictScreen({ onEnterCommunity, filters }) {
             </div>
             <div className="panel-body">
               <Chart option={demoOption} />
-            </div>
-          </div>
-
-          <div className="panel">
-            <div className="panel-title">
-              <span>数据来源与刷新</span>
-            </div>
-            <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center' }}>
-              {[
-                ['标签人数', '家庭医生签约标签库 · 自动抽取'],
-                ['签约人数', '签约居民主索引 · 日更'],
-                ['随访记录', '慢病随访系统 · 实时同步'],
-                ['下钻维度', '机构 / 时间 / 年龄 / 性别'],
-              ].map(([k, v]) => (
-                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 8 }}>
-                  <span style={{ color: '#7ee7ea' }}>{k}</span>
-                  <span style={{ color: '#8eacb4' }}>{v}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>

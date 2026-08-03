@@ -118,22 +118,37 @@ export const TAG_BREAKDOWN = [
 function buildDoctors(communityId, index) {
   const rnd = seeded(5000 + index * 131)
   const names = ['王建国', '李敏', '张晓华', '陈丽', '刘强', '赵静', '周伟', '吴芳', '郑磊', '孙婷', '马超', '黄燕']
-  const count = 6 + Math.floor(rnd() * 4)
+  const count = 6 + Math.floor(rnd() * 3)
   return Array.from({ length: count }, (_, i) => {
     const assigned = Math.floor(80 + rnd() * 160)
     const smokeDone = Math.floor(assigned * (0.7 + rnd() * 0.28))
     const dietDone = Math.floor(assigned * (0.65 + rnd() * 0.3))
     const followDone = Math.floor(assigned * (0.75 + rnd() * 0.22))
     const followPending = Math.max(0, Math.floor(assigned * 0.35) - Math.floor(followDone * 0.4))
+    const htn = Math.floor(assigned * (0.35 + rnd() * 0.12))
+    const dm = Math.floor(assigned * (0.22 + rnd() * 0.1))
+    const lipid = Math.floor(assigned * (0.14 + rnd() * 0.08))
+    const obesity = Math.max(0, assigned - htn - dm - lipid)
+    const htnFollow = Math.floor(htn * (0.78 + rnd() * 0.2))
+    const dmFollow = Math.floor(dm * (0.76 + rnd() * 0.2))
+    const lipidFollow = Math.floor(lipid * (0.72 + rnd() * 0.22))
+    const obesityFollow = Math.floor(obesity * (0.7 + rnd() * 0.24))
     return {
       id: `${communityId}-d${i + 1}`,
       name: names[(index + i) % names.length],
-      team: `${(i % 4) + 1}号家庭医生团队`,
       assigned,
       smokeDone,
       smokeRate: +(smokeDone / assigned * 100).toFixed(1),
       dietDone,
       dietRate: +(dietDone / assigned * 100).toFixed(1),
+      htn,
+      htnFollow,
+      dm,
+      dmFollow,
+      lipid,
+      lipidFollow,
+      obesity,
+      obesityFollow,
       followDone,
       followPending,
       followRate: +((followDone / (followDone + followPending)) * 100).toFixed(1),
